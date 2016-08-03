@@ -1,11 +1,10 @@
 package main
 
 import (
-	_ "spider/routers"
 	"github.com/astaxie/beego"
+	_ "visual_spider_go/routers"
 )
 
 func main() {
 	beego.Run()
 }
-
