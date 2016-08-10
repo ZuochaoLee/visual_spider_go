@@ -6,10 +6,10 @@
 package page_processer
 
 import (
-    "github.com/hu17889/go_spider/core/common/page"
+	"../common/page"
 )
 
 type PageProcesser interface {
-    Process(p *page.Page)
-    Finish()
+	Process(p *page.Page)
+	Finish()
 }
