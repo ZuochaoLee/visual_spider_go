@@ -4,7 +4,7 @@ import (
 	"../common/page"
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
-	"strings"
+	//"strings"
 )
 
 type PageProcesserHtml struct {
@@ -51,11 +51,16 @@ func (this *PageProcesserHtml) Process(p *page.Page) {
 		} else {
 			result[k], _ = query.Find(v).Attr(this.fun[k])
 		}
-		result[k] = strings.Trim(result[k], " \t\n")
+		//result[k] = strings.Trim(result[k], " \t\n")
 		if result[k] == "" {
 			p.SetSkip(true)
 		}
 		p.AddField(k, result[k])
+
+		//println(p.)
+	}
+	for k, v := range p.GetPageItems().GetAll() {
+		println(k, v)
 	}
 
 }

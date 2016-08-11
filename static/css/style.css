@@ -10,10 +10,10 @@ body,header,section,footer,nav,ul,li,p,h1,h2,h3,h4,h5,h6,img,input,strong,textar
 	outline: none;
 	-webkit-appearance: none;
 }
-body{
+/*body{
 	background-image: url(../img/1.jpg);
   	background-repeat:repeat-y;
-}
+}*/
 header{
 	width: 100%;
 	margin-top: 45px;
@@ -63,6 +63,7 @@ div.sec{
 	font-weight:bold;
 }
 .t2{
+	margin-top: 20px;
 	text-align: center;
 	font-size: 20px;
 }
@@ -116,16 +117,10 @@ li.off{
 	position:fixed;
 	top:10%;
 	border :1px solid #aaa;
+	border-radius: 5%;
+	overflow: auto;
 }
-.dig2{
-	display: none;
-	width: 50%;
-	height: 40%;
-	margin-left: 25%;
-	position:fixed;
-	top:30%;
-	border :1px solid #aaa;
-}
+
 dialog{
 	background-color: #ddd;
 }
