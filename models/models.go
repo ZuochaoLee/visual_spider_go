@@ -79,8 +79,8 @@ func GetRulersById(id int) (ruler []Ruler) {
 	}
 	return
 }
-func AddConf(taskname, cron, des, dbtype, dbhost, dbport, dbname, dbuser, dbpasswd, reqtype, rooturl, cookie, haedfile, useproxy, texttype, postdata, pagepre, pagerule, pagefun string, threadnum int) (code int) {
-	var sql = "INSERT INTO conf(taskname, cron, des, dbtype, dbhost, dbport, dbname, dbuser, dbpasswd, reqtype, rooturl, cookie, haedfile, useproxy, texttype, postdata, pagepre, pagerule, pagefun,theardnum,status) VALUES('" + taskname + "', '" + cron + "', '" + des + "', '" + dbtype + "','" + dbhost + "','" + dbport + "','" + dbname + "','" + dbuser + "','" + dbpasswd + "','" + reqtype + "','" + rooturl + "','" + cookie + "','" + haedfile + "','" + useproxy + "','" + texttype + "','" + postdata + "','" + pagepre + "','" + pagerule + "','" + pagepre + "', " + strconv.Itoa(threadnum) + ", 0);"
+func AddConf(taskname, cron, des, dbtype, dbhost, dbport, dbname, dbuser, dbpasswd, reqtype, rooturl, cookie, headerfile, useproxy, texttype, postdata, pagepre, pagerule, pagefun, threadnum string) (code int) {
+	var sql = "INSERT INTO conf(taskname, cron, des, dbtype, dbhost, dbport, dbname, dbuser, dbpasswd, reqtype, rooturl, cookie, headerfile, useproxy, texttype, postdata, pagepre, pagerule, pagefun,theardnum,status) VALUES('" + taskname + "', '" + cron + "', '" + des + "', '" + dbtype + "','" + dbhost + "','" + dbport + "','" + dbname + "','" + dbuser + "','" + dbpasswd + "','" + reqtype + "','" + rooturl + "','" + cookie + "','" + headerfile + "','" + useproxy + "','" + texttype + "','" + postdata + "','" + pagepre + "','" + pagerule + "','" + pagepre + "', " + threadnum + ", 0);"
 	//println(sql)
 	_, err := db.Exec(sql)
 	if err != nil {
@@ -109,90 +109,20 @@ func GetIdByName(taskname string) (id int) {
 	}
 	return
 }
-func AddRules(name, rule, fun []string, taskid int) (code int) {
-	for i := range name {
-		var sql = "INSERT INTO rule(taskid,name, rule, fun) VALUES(" + strconv.Itoa(taskid) + ",'" + name[i] + "', '" + rule[i] + "', '" + fun[i] + ");"
-		//println(sql)
-		_, err := db.Exec(sql)
-		if err != nil {
-			code = 0
-		} else {
-			code = 1
-		}
+func AddRules(name, rule, fun string, taskid int) (code int) {
 
+	var sql = "INSERT INTO rule(taskid,name, rule, fun) VALUES(" + strconv.Itoa(taskid) + ",'" + name + "', '" + rule + "', '" + fun + ");"
+	//println(sql)
+	_, err := db.Exec(sql)
+	if err != nil {
+		code = 0
+	} else {
+		code = 1
 	}
+
 	return
 }
 
-// func GetTask() (task []Task) {
-// 	rows, err := db.Query("select name, script,command,times,status,des from task ")
-// 	if err != nil {
-// 		log.Println(err)
-// 	}
-// 	defer rows.Close()
-// 	tt := Task{}
-// 	task = []Task{}
-// 	for rows.Next() {
-// 		err := rows.Scan(&tt.Name, &tt.Script, &tt.Command, &tt.Time, &tt.Status, &tt.Des)
-// 		if err != nil {
-// 			log.Fatal(err)
-// 		}
-// 		task = append(task, tt)
-// 	}
-// 	err = rows.Err()
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-// 	return
-// }
-// func GetTaskByName(name string) (task Task) {
-// 	rows, err := db.Query("select name, script,command,times,status,des from task where name='" + name + "';")
-// 	if err != nil {
-// 		log.Println(err)
-// 	}
-// 	defer rows.Close()
-// 	task = Task{}
-// 	for rows.Next() {
-// 		err := rows.Scan(&task.Name, &task.Script, &task.Command, &task.Time, &task.Status, &task.Des)
-// 		if err != nil {
-// 			log.Fatal(err)
-// 		}
-// 	}
-// 	err = rows.Err()
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-// 	return
-// }
-// func GetConfByName(name string) (command string) {
-// 	rows, err := db.Query("select script from conf where name='" + name + "';")
-// 	if err != nil {
-// 		log.Println(err)
-// 	}
-// 	defer rows.Close()
-// 	for rows.Next() {
-// 		err := rows.Scan(&command)
-// 		if err != nil {
-// 			log.Fatal(err)
-// 		}
-// 	}
-// 	err = rows.Err()
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-// 	return
-// }
-// func AddTask(name, script, command, times, des string, status int) (code int) {
-// 	var sql = "INSERT INTO task(name, script,command,times,status,des) VALUES('" + name + "', '" + script + "', '" + command + "', '" + times + "', " + strconv.Itoa(status) + ", '" + des + "');"
-// 	println(sql)
-// 	_, err := db.Exec(sql)
-// 	if err != nil {
-// 		code = 0
-// 	} else {
-// 		code = 1
-// 	}
-// 	return
-// }
 // func UpdateTask(name, script, command, times, des string, status int) (code int) {
 // 	var sql = "update task set name='" + name + "', script='" + script + "',command='" + command + "',times='" + times + "',status=" + strconv.Itoa(status) + ",des='" + des + "' where name='" + name + "';"
 // 	_, err := db.Exec(sql)
@@ -233,26 +163,26 @@ func AddRules(name, rule, fun []string, taskid int) (code int) {
 // 	}
 // 	return
 // }
-// func Stop(name string) (code int) {
-// 	var sql = "update task set status=0 where name='" + name + "';"
-// 	_, err := db.Exec(sql)
-// 	if err != nil {
-// 		code = 0
-// 		RemoveCron(name)
-// 	} else {
-// 		code = 1
-// 	}
-// 	return
-// }
-// func Start(name string) (code int) {
-// 	var sql = "update task set status=1 where name='" + name + "';"
-// 	_, err := db.Exec(sql)
-// 	if err != nil {
-// 		code = 0
-// 		task := GetTaskByName(name)
-// 		AddCron(task.Time, task.Script, task.Command, task.Name)
-// 	} else {
-// 		code = 1
-// 	}
-// 	return
-// }
+func Stop(name string) (code int) {
+	var sql = "update conf set status=0 where id='" + name + "';"
+	_, err := db.Exec(sql)
+	if err != nil {
+		code = 0
+		RemoveCron(name)
+	} else {
+		code = 1
+	}
+	return
+}
+func Start(id, name, cron string) (code int) {
+	var sql = "update conf set status=1 where id=" + id + ";"
+	println(sql)
+	_, err := db.Exec(sql)
+	if err != nil {
+		code = 0
+		AddCron(id, name, cron)
+	} else {
+		code = 1
+	}
+	return
+}

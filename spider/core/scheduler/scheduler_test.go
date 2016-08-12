@@ -6,10 +6,10 @@
 package scheduler_test
 
 import (
-	"../common/request"
-	"../scheduler"
 	"fmt"
 	"testing"
+	"visual_spider_go/spider/core/common/request"
+	"visual_spider_go/spider/core/scheduler"
 )
 
 func TestQueueScheduler(t *testing.T) {

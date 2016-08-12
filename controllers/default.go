@@ -3,6 +3,8 @@ package controllers
 import (
 	//"fmt"
 	"github.com/astaxie/beego"
+	//"strconv"
+	"strings"
 	"visual_spider_go/models"
 )
 
@@ -25,19 +27,49 @@ func (c *MainController) Get() {
 // 	c.ServeJSON()
 // }
 
-// type AddTController struct {
-// 	beego.Controller
-// }
+type AddConfController struct {
+	beego.Controller
+}
 
-// func (c *AddTController) Get() {
-// 	n := c.Input().Get("n")
-// 	t := c.Input().Get("t")
-// 	d := c.Input().Get("d")
-// 	s := c.Input().Get("s")
-// 	o := c.Input().Get("o") //name, script, command, times, des string, status int
-// 	c.Data["json"] = map[string]int{"code": models.AddTask(n, s, o, t, d, 0)}
-// 	c.ServeJSON()
-// }
+func (c *AddConfController) Get() {
+	taskname := c.Input().Get("taskname")
+	cron := c.Input().Get("cron")
+	des := c.Input().Get("des")
+	dbtype := c.Input().Get("dbtype")
+	dbhost := c.Input().Get("dbhost")
+	dbport := c.Input().Get("dbport")
+	dbname := c.Input().Get("dbname")
+	dbuser := c.Input().Get("dbuser")
+	dbpasswd := c.Input().Get("dbpasswd")
+	reqtype := c.Input().Get("reqtype")
+	rooturl := c.Input().Get("rooturl")
+	cookie := c.Input().Get("cookie")
+	headerfile := c.Input().Get("headerfile")
+	useproxy := c.Input().Get("useproxy")
+	texttype := c.Input().Get("texttype")
+	postdata := c.Input().Get("postdata")
+	pagepre := c.Input().Get("pagepre")
+	pagerule := c.Input().Get("pagerule")
+	pagefun := c.Input().Get("pagefun")
+	theardnum := c.Input().Get("theardnum")
+	name := c.Input().Get("name")
+	rule := c.Input().Get("rule")
+	fun := c.Input().Get("fun")
+	names := strings.Split(name, "|")
+	rules := strings.Split(rule, "|")
+	funs := strings.Split(fun, "|")
+	if models.AddConf(taskname, cron, des, dbtype, dbhost, dbport, dbname, dbuser, dbpasswd, reqtype, rooturl, cookie, headerfile, useproxy, texttype, postdata, pagepre, pagerule, pagefun, theardnum) == 1 {
+		id := models.GetIdByName(taskname)
+		code := 0
+		for i, _ := range names {
+			code = models.AddRules(names[i], rules[i], funs[i], id)
+		}
+		c.Data["json"] = map[string]int{"code": code}
+	} else {
+		c.Data["json"] = map[string]int{"code": 0}
+	}
+	c.ServeJSON()
+}
 
 // type UpdateTController struct {
 // 	beego.Controller
@@ -65,22 +97,25 @@ func (c *MainController) Get() {
 // 	c.ServeJSON()
 // }
 
-// type StopController struct {
-// 	beego.Controller
-// }
+type StopController struct {
+	beego.Controller
+}
 
-// func (c *StopController) Get() {
-// 	name := c.Input().Get("name")
-// 	c.Data["json"] = map[string]int{"code": models.Stop(name)}
-// 	c.ServeJSON()
-// }
+func (c *StopController) Get() {
+	name := c.Input().Get("name")
+	c.Data["json"] = map[string]int{"code": models.Stop(name)}
+	c.ServeJSON()
+}
 
-// type StartController struct {
-// 	beego.Controller
-// }
+type StartController struct {
+	beego.Controller
+}
 
-// func (c *StartController) Get() {
-// 	name := c.Input().Get("name")
-// 	c.Data["json"] = map[string]int{"code": models.Start(name)}
-// 	c.ServeJSON()
-// }
+func (c *StartController) Get() {
+	id := c.Input().Get("id")
+	name := c.Input().Get("name")
+	cron := c.Input().Get("cron")
+	println(id, name, cron)
+	c.Data["json"] = map[string]int{"code": models.Start(id, name, cron)}
+	c.ServeJSON()
+}

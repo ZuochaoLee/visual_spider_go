@@ -6,7 +6,7 @@
 package scheduler
 
 import (
-	"../common/request"
+	"visual_spider_go/spider/core/common/request"
 )
 
 type SimpleScheduler struct {

@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"os"
 
-	"../mlog"
+	"visual_spider_go/spider/core/common/mlog"
 )
 
 // Request represents object waiting for being crawled.

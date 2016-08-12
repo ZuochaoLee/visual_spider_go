@@ -1,9 +1,9 @@
 package page_processer
 
 import (
-	"../common/page"
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
+	"visual_spider_go/spider/core/common/page"
 	//"strings"
 )
 

@@ -3,13 +3,13 @@
 package page
 
 import (
-	"../mlog"
-	"../page_items"
-	"../request"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/bitly/go-simplejson"
 	"net/http"
 	"strings"
+	"visual_spider_go/spider/core/common/mlog"
+	"visual_spider_go/spider/core/common/page_items"
+	"visual_spider_go/spider/core/common/request"
 	//"fmt"
 )
 

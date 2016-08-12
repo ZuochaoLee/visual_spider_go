@@ -6,7 +6,7 @@
 package page_processer
 
 import (
-	"../common/page"
+	"visual_spider_go/spider/core/common/page"
 )
 
 type PageProcesser interface {

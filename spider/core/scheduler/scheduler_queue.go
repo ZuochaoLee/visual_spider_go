@@ -6,10 +6,10 @@
 package scheduler
 
 import (
-	"../common/request"
 	"container/list"
 	"crypto/md5"
 	"sync"
+	"visual_spider_go/spider/core/common/request"
 	//"fmt"
 )
 

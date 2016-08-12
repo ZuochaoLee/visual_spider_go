@@ -1,10 +1,12 @@
 package models
 
 import (
-	//"fmt"
+	"fmt"
 	"github.com/jakecoffman/cron"
 	//"os/exec"
-	//"time"
+	"strconv"
+	"time"
+	"visual_spider_go/spider/template"
 )
 
 var c *cron.Cron
@@ -13,31 +15,22 @@ func init() {
 	c = cron.New()
 }
 
-// func InitTask() {
-// 	fmt.Println("start")
-// 	tasks := GetTask()
-// 	for i := 0; i < len(tasks); i++ {
-// 		t := tasks[i].Time
-// 		s := tasks[i].Script
-// 		cm := tasks[i].Command
-// 		n := tasks[i].Name
-// 		c.AddFunc(t, func() { Exec(s, cm) }, n)
-// 	}
-// 	c.Start()
-// 	for {
-// 		time.Sleep(100000 * time.Second)
-// 	}
-// 	c.Stop()
-// }
-// func Exec(n, s string) {
-// 	cm := GetConfByName(n)
-// 	exec.Command(cm, s)
-// 	//buf, err := cmd.Output()
-// 	//fmt.Printf("%s\n%s", buf, err)
-// }
-// func AddCron(t, s, cm, n string) {
-// 	c.AddFunc(t, func() { Exec(s, cm) }, n)
-// }
-// func RemoveCron(n string) {
-// 	c.RemoveJob(n)
-// }
+func InitTask() {
+	fmt.Println("start")
+	tasks := GetConfs()
+	for i := range tasks {
+		c.AddFunc(tasks[i].Cron, func() { template.Run(strconv.Itoa(tasks[i].ID), db) }, tasks[i].TaskName)
+	}
+	c.Start()
+	for {
+		time.Sleep(100000 * time.Second)
+	}
+	c.Stop()
+}
+func AddCron(id, name, cron string) {
+	println(id, name, cron)
+	c.AddFunc(cron, func() { template.Run(id, db) }, name)
+}
+func RemoveCron(name string) {
+	c.RemoveJob(name)
+}

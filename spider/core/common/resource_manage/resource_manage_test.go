@@ -2,8 +2,8 @@
 package resource_manage_test
 
 import (
-	"../resource_manage"
 	"testing"
+	"visual_spider_go/spider/core/common/resource_manage"
 )
 
 func TestResourceManage(t *testing.T) {

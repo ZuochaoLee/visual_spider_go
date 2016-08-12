@@ -2,8 +2,8 @@
 package downloader
 
 import (
-	"../common/page"
-	"../common/request"
+	"visual_spider_go/spider/core/common/page"
+	"visual_spider_go/spider/core/common/request"
 )
 
 // The Downloader interface.

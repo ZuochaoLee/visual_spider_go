@@ -2,8 +2,8 @@
 package pipeline
 
 import (
-	"../common/com_interfaces"
-	"../common/page_items"
+	"visual_spider_go/spider/core/common/com_interfaces"
+	"visual_spider_go/spider/core/common/page_items"
 )
 
 // The interface Pipeline can be implemented to customize ways of persistent.

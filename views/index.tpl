@@ -55,7 +55,7 @@
             {{if eq .Status 1}}
               <li><button class="off" onclick="stopt({{.TaskName}})">停止任务</button></li>
             {{else}}
-              <li><button class="on" onclick="startt({{.TaskName}})">开启任务</button></li>
+              <li><button class="on" onclick="startt({{.ID}},{{.TaskName}},{{.Cron}})">开启任务</button></li>
             {{end}}
           {{end}}
         </ul>
@@ -137,7 +137,7 @@
         <p><label>项目名称：</label></label><input id="in1" type="text" name="in1" placeholder="抓取字段名称"/></p>
         <p><label>项目规则：</label><input id="ir1" type="text" name="ir1" placeholder="选择器规则 比如 .in p"/></p>
         <p><label>项目函数：</label><input id="if1" type="text" name="if1" placeholder="text或者属性名称 比如：href"/></p>
-        <button id="1" class="add-rule"  onclick="addRule()">+</button>
+        <button id="1" class="add-rule"  onclick="addRule(1)">+</button>
         <hr/>
         <div><input class="submit" type="button" name="submit" value="提交" onclick="submitTask(1)" /></div>
       </div>
@@ -218,7 +218,7 @@
         <p><label>项目名称：</label></label><input id="in11" type="text" name="in1" placeholder="抓取字段名称"/></p>
         <p><label>项目规则：</label><input id="ir11" type="text" name="ir1" placeholder="选择器规则 比如 .in p"/></p>
         <p><label>项目函数：</label><input id="if11" type="text" name="if1" placeholder="text或者属性名称 比如：href"/></p>
-        <button id="1" class="add-rule"  onclick="addRule()">+</button>
+        <button id="1" class="add-rule"  onclick="addRule(2)">+</button>
         <hr/>
         <div><input class="submit" type="button" name="submit" value="提交" onclick="submitTask(2)" /></div>
       </div>

@@ -2,16 +2,16 @@
 package spider
 
 import (
-	"../common/mlog"
-	"../common/page"
-	"../common/page_items"
-	"../common/request"
-	"../common/resource_manage"
-	"../downloader"
-	"../page_processer"
-	"../pipeline"
-	"../scheduler"
 	"math/rand"
+	"visual_spider_go/spider/core/common/mlog"
+	"visual_spider_go/spider/core/common/page"
+	"visual_spider_go/spider/core/common/page_items"
+	"visual_spider_go/spider/core/common/request"
+	"visual_spider_go/spider/core/common/resource_manage"
+	"visual_spider_go/spider/core/downloader"
+	"visual_spider_go/spider/core/page_processer"
+	"visual_spider_go/spider/core/pipeline"
+	"visual_spider_go/spider/core/scheduler"
 	//"net/http"
 	"time"
 	//"fmt"
@@ -68,6 +68,36 @@ func NewSpider(pageinst page_processer.PageProcesser, taskname string) *Spider {
 	return ap
 }
 
+//自定义函数
+func New(taskname string) *Spider {
+	mlog.StraceInst().Open()
+
+	ap := &Spider{taskname: taskname}
+
+	// init filelog.
+	ap.CloseFileLog()
+	ap.exitWhenComplete = true
+	ap.sleeptype = "fixed"
+	ap.startSleeptime = 0
+
+	// init spider
+	if ap.pScheduler == nil {
+		ap.SetScheduler(scheduler.NewQueueScheduler(false))
+	}
+
+	if ap.pDownloader == nil {
+		ap.SetDownloader(downloader.NewHttpDownloader())
+	}
+
+	mlog.StraceInst().Println("** start spider **")
+	ap.pPiplelines = make([]pipeline.Pipeline, 0)
+
+	return ap
+}
+func (this *Spider) SetPageProcesser(p page_processer.PageProcesser) *Spider {
+	this.pPageProcesser = p
+	return this
+}
 func (this *Spider) Taskname() string {
 	return this.taskname
 }

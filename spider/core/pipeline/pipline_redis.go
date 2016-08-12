@@ -1,12 +1,12 @@
 package pipeline
 
 import (
-	"../common/com_interfaces"
-	"../common/page_items"
 	redis "github.com/alphazero/Go-Redis"
 	"math/rand"
 	"strconv"
 	"time"
+	"visual_spider_go/spider/core/common/com_interfaces"
+	"visual_spider_go/spider/core/common/page_items"
 )
 
 type PipelineRedis struct {

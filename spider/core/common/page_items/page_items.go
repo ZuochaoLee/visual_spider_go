@@ -3,7 +3,7 @@
 package page_items
 
 import (
-	"../request"
+	"visual_spider_go/spider/core/common/request"
 )
 
 // PageItems represents an entity save result parsed by PageProcesser and will be output at last.
