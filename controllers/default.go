@@ -3,7 +3,7 @@ package controllers
 import (
 	//"fmt"
 	"github.com/astaxie/beego"
-	//"strconv"
+	"strconv"
 	"strings"
 	"visual_spider_go/models"
 )
@@ -17,12 +17,23 @@ func (c *MainController) Get() {
 	c.TplName = "index.tpl"
 }
 
+type GetRuleController struct {
+	beego.Controller
+}
+
+func (c *GetRuleController) Get() {
+	id := c.Input().Get("id")
+	iid, _ := strconv.Atoi(id)
+	c.Data["json"] = models.GetRulersById(iid)
+	c.ServeJSON()
+}
+
 // type TestController struct {
 // 	beego.Controller
 // }
 
 // func (c *TestController) Get() {
-// 	models.InitTask()
+// 	template.Run()
 // 	//c.Data["json"] = map[string]int{"code": models.UpdateConf("php", "/lnmp/php/bin/php")}
 // 	c.ServeJSON()
 // }
@@ -51,6 +62,10 @@ func (c *AddConfController) Get() {
 	pagepre := c.Input().Get("pagepre")
 	pagerule := c.Input().Get("pagerule")
 	pagefun := c.Input().Get("pagefun")
+	pagefour := c.Input().Get("pagefour")
+	pagethree := c.Input().Get("pagethree")
+	pagetwo := c.Input().Get("pagetwo")
+	pageone := c.Input().Get("pageone")
 	theardnum := c.Input().Get("theardnum")
 	name := c.Input().Get("name")
 	rule := c.Input().Get("rule")
@@ -58,7 +73,7 @@ func (c *AddConfController) Get() {
 	names := strings.Split(name, "|")
 	rules := strings.Split(rule, "|")
 	funs := strings.Split(fun, "|")
-	if models.AddConf(taskname, cron, des, dbtype, dbhost, dbport, dbname, dbuser, dbpasswd, reqtype, rooturl, cookie, headerfile, useproxy, texttype, postdata, pagepre, pagerule, pagefun, theardnum) == 1 {
+	if models.AddConf(taskname, cron, des, dbtype, dbhost, dbport, dbname, dbuser, dbpasswd, reqtype, rooturl, cookie, headerfile, useproxy, texttype, postdata, pagepre, pagerule, pagefun, pagefour, pagethree, pagetwo, pageone, theardnum) == 1 {
 		id := models.GetIdByName(taskname)
 		code := 0
 		for i, _ := range names {

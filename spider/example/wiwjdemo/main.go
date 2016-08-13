@@ -27,7 +27,7 @@ import (
 
 func main() {
 	//配置信息 可以来自数据库
-	base := map[string]string{"taskname": "iwjw", "threadnum": "30", "dbtype": "file", "dbhost": "", "dbport": "", "dbdb": "./data11.txt", "dbuser": "", "dbpasswd": ""}
+	base := map[string]string{"taskname": "北京爱屋吉屋二手房", "threadnum": "30", "dbtype": "file", "dbhost": "", "dbport": "", "dbdb": "./data11.txt", "dbuser": "", "dbpasswd": ""}
 	conf := map[string]string{"rooturl": "https://www.iwjw.com/sale/beijing/g1id124|ip5p|/", "texttype": "html", "resqType": "GET", "cookie": "", "headerfile": "", "postdata": "", "proxy": ""}
 	page := map[string]string{"pre": "http://www.iwjw.com/", "rule": "#iwjw > div > div.mod-list > div.mod-lists.mb50.clearfix > div.List.mod-border-box.mod-list-shadow > ol > li> div.f-l > h4 > b > a", "fun": "href"}
 	rule := map[string]string{"title": "#iwjw > div > div.mod-rent-detail.clearfix.mod-detail > div > div.detail-basic.clearfix > div.detail-infos > div > div.title > h1", "price": "#iwjw > div > div.mod-rent-detail.clearfix.mod-detail > div > div.detail-basic.clearfix > div.detail-infos > div > div.title > div > p > span:nth-child(1) > i"}

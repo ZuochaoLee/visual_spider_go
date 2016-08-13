@@ -7,7 +7,7 @@ import (
 
 func init() {
 	beego.Router("/", &controllers.MainController{})
-	// beego.Router("/t", &controllers.TestController{})
+	beego.Router("/getrule", &controllers.GetRuleController{})
 	beego.Router("/addconf", &controllers.AddConfController{})
 	// beego.Router("/updateTask", &controllers.UpdateTController{})
 	// beego.Router("/updateConf", &controllers.AddCController{})

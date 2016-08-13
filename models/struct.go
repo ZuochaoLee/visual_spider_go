@@ -23,6 +23,10 @@ type Conf struct {
 	PagePre    string
 	PageRule   string
 	PageFun    string
+	PageFour   string
+	PageThree  string
+	PageTwo    string
+	PageOne    string
 }
 type Ruler struct {
 	ID     int

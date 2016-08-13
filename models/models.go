@@ -27,7 +27,27 @@ func GetConfs() (conf []Conf) {
 	defer rows.Close()
 	ct := Conf{}
 	for rows.Next() {
-		err := rows.Scan(&ct.ID, &ct.TaskName, &ct.Theardnum, &ct.Cron, &ct.Des, &ct.Dbtyble, &ct.Dbhost, &ct.Dbport, &ct.Dbname, &ct.Dbuser, &ct.Dbpasswd, &ct.ReqType, &ct.RootUrl, &ct.Cookie, &ct.HeaderFile, &ct.UseProxy, &ct.TextType, &ct.PostData, &ct.Status, &ct.PagePre, &ct.PageRule, &ct.PageFun)
+		err := rows.Scan(&ct.ID, &ct.TaskName, &ct.Theardnum, &ct.Cron, &ct.Des, &ct.Dbtyble, &ct.Dbhost, &ct.Dbport, &ct.Dbname, &ct.Dbuser, &ct.Dbpasswd, &ct.ReqType, &ct.RootUrl, &ct.Cookie, &ct.HeaderFile, &ct.UseProxy, &ct.TextType, &ct.PostData, &ct.Status, &ct.PagePre, &ct.PageRule, &ct.PageFun, &ct.PageFour, &ct.PageThree, &ct.PageTwo, &ct.PageOne)
+		if err != nil {
+			log.Fatal(err)
+		}
+		conf = append(conf, ct)
+	}
+	err = rows.Err()
+	if err != nil {
+		log.Fatal(err)
+	}
+	return
+}
+func GetConfsByStatus(s int) (conf []Conf) {
+	rows, err := db.Query("select * from conf where status=" + strconv.Itoa(s) + ";")
+	if err != nil {
+		log.Println(err)
+	}
+	defer rows.Close()
+	ct := Conf{}
+	for rows.Next() {
+		err := rows.Scan(&ct.ID, &ct.TaskName, &ct.Theardnum, &ct.Cron, &ct.Des, &ct.Dbtyble, &ct.Dbhost, &ct.Dbport, &ct.Dbname, &ct.Dbuser, &ct.Dbpasswd, &ct.ReqType, &ct.RootUrl, &ct.Cookie, &ct.HeaderFile, &ct.UseProxy, &ct.TextType, &ct.PostData, &ct.Status, &ct.PagePre, &ct.PageRule, &ct.PageFun, &ct.PageFour, &ct.PageThree, &ct.PageTwo, &ct.PageOne)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -47,7 +67,7 @@ func GetConfById(id int) (conf Conf) {
 	}
 	defer rows.Close()
 	for rows.Next() {
-		err := rows.Scan(&conf.ID, &conf.TaskName, &conf.Theardnum, &conf.Cron, &conf.Des, &conf.Dbtyble, &conf.Dbhost, &conf.Dbport, &conf.Dbname, &conf.Dbuser, &conf.Dbpasswd, &conf.ReqType, &conf.RootUrl, &conf.Cookie, &conf.HeaderFile, &conf.UseProxy, &conf.TextType, &conf.PostData, &conf.Status, &conf.PagePre, &conf.PageRule, &conf.PageFun)
+		err := rows.Scan(&conf.ID, &conf.TaskName, &conf.Theardnum, &conf.Cron, &conf.Des, &conf.Dbtyble, &conf.Dbhost, &conf.Dbport, &conf.Dbname, &conf.Dbuser, &conf.Dbpasswd, &conf.ReqType, &conf.RootUrl, &conf.Cookie, &conf.HeaderFile, &conf.UseProxy, &conf.TextType, &conf.PostData, &conf.Status, &conf.PagePre, &conf.PageRule, &conf.PageFun, &conf.PageFour, &conf.PageThree, &conf.PageTwo, &conf.PageOne)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -79,8 +99,8 @@ func GetRulersById(id int) (ruler []Ruler) {
 	}
 	return
 }
-func AddConf(taskname, cron, des, dbtype, dbhost, dbport, dbname, dbuser, dbpasswd, reqtype, rooturl, cookie, headerfile, useproxy, texttype, postdata, pagepre, pagerule, pagefun, threadnum string) (code int) {
-	var sql = "INSERT INTO conf(taskname, cron, des, dbtype, dbhost, dbport, dbname, dbuser, dbpasswd, reqtype, rooturl, cookie, headerfile, useproxy, texttype, postdata, pagepre, pagerule, pagefun,theardnum,status) VALUES('" + taskname + "', '" + cron + "', '" + des + "', '" + dbtype + "','" + dbhost + "','" + dbport + "','" + dbname + "','" + dbuser + "','" + dbpasswd + "','" + reqtype + "','" + rooturl + "','" + cookie + "','" + headerfile + "','" + useproxy + "','" + texttype + "','" + postdata + "','" + pagepre + "','" + pagerule + "','" + pagepre + "', " + threadnum + ", 0);"
+func AddConf(taskname, cron, des, dbtype, dbhost, dbport, dbname, dbuser, dbpasswd, reqtype, rooturl, cookie, headerfile, useproxy, texttype, postdata, pagepre, pagerule, pagefun, pagefour, pagethree, pagetwo, pageone, threadnum string) (code int) {
+	var sql = "INSERT INTO conf(taskname, cron, des, dbtype, dbhost, dbport, dbname, dbuser, dbpasswd, reqtype, rooturl, cookie, headerfile, useproxy, texttype, postdata, pagepre, pagerule, pagefun,pagefour,pagethree,pagetwo,pageone,theardnum,status) VALUES('" + taskname + "', '" + cron + "', '" + des + "', '" + dbtype + "','" + dbhost + "','" + dbport + "','" + dbname + "','" + dbuser + "','" + dbpasswd + "','" + reqtype + "','" + rooturl + "','" + cookie + "','" + headerfile + "','" + useproxy + "','" + texttype + "','" + postdata + "','" + pagepre + "','" + pagerule + "','" + pagepre + "','" + pagefour + "','" + pagethree + "','" + pagetwo + "','" + pageone + "', " + threadnum + ", 0);"
 	//println(sql)
 	_, err := db.Exec(sql)
 	if err != nil {
@@ -164,25 +184,24 @@ func AddRules(name, rule, fun string, taskid int) (code int) {
 // 	return
 // }
 func Stop(name string) (code int) {
-	var sql = "update conf set status=0 where id='" + name + "';"
+	var sql = "update conf set status=0 where taskname='" + name + "';"
 	_, err := db.Exec(sql)
 	if err != nil {
 		code = 0
-		RemoveCron(name)
 	} else {
 		code = 1
+		RemoveCron(name)
 	}
 	return
 }
 func Start(id, name, cron string) (code int) {
 	var sql = "update conf set status=1 where id=" + id + ";"
-	println(sql)
 	_, err := db.Exec(sql)
 	if err != nil {
 		code = 0
-		AddCron(id, name, cron)
 	} else {
 		code = 1
+		AddCron(id, name, cron)
 	}
 	return
 }

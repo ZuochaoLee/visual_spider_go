@@ -6,7 +6,6 @@ import (
 	//"os/exec"
 	"strconv"
 	"time"
-	"visual_spider_go/spider/template"
 )
 
 var c *cron.Cron
@@ -17,9 +16,9 @@ func init() {
 
 func InitTask() {
 	fmt.Println("start")
-	tasks := GetConfs()
+	tasks := GetConfsByStatus(1)
 	for i := range tasks {
-		c.AddFunc(tasks[i].Cron, func() { template.Run(strconv.Itoa(tasks[i].ID), db) }, tasks[i].TaskName)
+		c.AddFunc(tasks[i].Cron, func() { Run(strconv.Itoa(tasks[i].ID)) }, tasks[i].TaskName)
 	}
 	c.Start()
 	for {
@@ -28,8 +27,7 @@ func InitTask() {
 	c.Stop()
 }
 func AddCron(id, name, cron string) {
-	println(id, name, cron)
-	c.AddFunc(cron, func() { template.Run(id, db) }, name)
+	c.AddFunc(cron, func() { println("in"); Run(id) }, name)
 }
 func RemoveCron(name string) {
 	c.RemoveJob(name)

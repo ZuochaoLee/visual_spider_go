@@ -46,13 +46,15 @@ var sid
       var num=$(".add-rule").attr("id");
       num=(parseInt(num)+1).toString();
       if(f==1){
-        $(".add-rule").before("<hr class=\"in\"/><p><label>项目名称：</label><input id=\"in"+num+"\" type=\"text\" name=\"in"+num+"\" placeholder=\"抓取字段名称\"/><p><p><label>项目规则：</label><input id=\"ir"+num+"\" type=\"text\" name=\"ir"+num+"\"/ placeholder=\"选择器规则 比如 .in p\"></p><p><label>项目函数：</label><input id=\"if"+num+"\" type=\"text\" name=\"if"+num+"\" placeholder=\"text或者属性名称 比如：href\"/></p>");
+        $(".add-rule.d1").before("<hr class=\"in\"/><p><label>项目名称：</label><input id=\"in"+num+"\" type=\"text\" name=\"in"+num+"\" placeholder=\"抓取字段名称\"/><p><p><label>项目规则：</label><input id=\"ir"+num+"\" type=\"text\" name=\"ir"+num+"\"/ placeholder=\"选择器规则 比如 .in p\"></p><p><label>项目函数：</label><input id=\"if"+num+"\" type=\"text\" name=\"if"+num+"\" placeholder=\"text或者属性名称 比如：href\"/></p>");
+        $(".add-rule.d1").attr("id",num);
       }else{
-        $(".add-rule").before("<hr class=\"in\"/><p><label>项目名称：</label><input id=\"in1"+num+"\" type=\"text\" name=\"in1"+num+"\" placeholder=\"抓取字段名称\"/><p><p><label>项目规则：</label><input id=\"ir1"+num+"\" type=\"text\" name=\"ir1"+num+"\"/ placeholder=\"选择器规则 比如 .in p\"></p><p><label>项目函数：</label><input id=\"if1"+num+"\" type=\"text\" name=\"if1"+num+"\" placeholder=\"text或者属性名称 比如：href\"/></p>");
+        $(".add-rule.d2").before("<hr class=\"in\"/><p><label>项目名称：</label><input id=\"in1"+num+"\" type=\"text\" name=\"in1"+num+"\" placeholder=\"抓取字段名称\"/><p><p><label>项目规则：</label><input id=\"ir1"+num+"\" type=\"text\" name=\"ir1"+num+"\"/ placeholder=\"选择器规则 比如 .in p\"></p><p><label>项目函数：</label><input id=\"if1"+num+"\" type=\"text\" name=\"if1"+num+"\" placeholder=\"text或者属性名称 比如：href\"/></p>");
+        $(".add-rule.d2").attr("id",num);
       }
-      $(".add-rule").attr("id",num);
+      
     }
-    function digJump1(id,taskname, theardnum,cron, des, dbtype, dbhost, dbport, dbname, dbuser, dbpasswd, reqtype, rooturl, cookie, headerfile, useproxy, texttype, postdata, pagepre, pagerule, pagefun){
+    function digJump1(id,taskname, theardnum,cron, des, dbtype, dbhost, dbport, dbname, dbuser, dbpasswd, reqtype, rooturl, cookie, headerfile, useproxy, texttype, postdata, pagepre, pagerule, pagefun,pagefour,pagethree,pagetwo,pageone){
       $("#dig").css("display","block");
       sid=id
       $("#taskname1").attr("value",taskname);
@@ -91,6 +93,24 @@ var sid
       $("#pagerule1").attr("value",pagerule);
       $("#pagefun1").attr("value",pagefun);
       $("#postdata1").attr("value",postdata);
+      $("#pagefour1").attr("value",pagefour);
+      $("#pagethree1").attr("value",pagethree);
+      $("#pagetwo1").attr("value",pagetwo);
+      $("#pageone1").attr("value",pageone);
+      $.get("/getrule",{"id":id},function(data){
+        for( i in data){
+          if(i>0){
+            var num=(parseInt(i)+1).toString()
+            $(".add-rule.d2").before("<hr class=\"in\"/><p><label>项目名称：</label><input id=\"in"+num+"\" type=\"text\" name=\"in"+num+"\" value=\""+data[i].Name+"\"/><p><p><label>项目规则：</label><input id=\"ir"+num+"\" type=\"text\" name=\"ir"+num+"\"/ value=\""+data[i].Rule+"\"></p><p><label>项目函数：</label><input id=\"if"+num+"\" type=\"text\" name=\"if"+num+"\" value=\""+data[i].Fun+"\"/></p>");
+            $(".add-rule.d2").attr("id",num);
+          }else{
+            $("#in11").attr("value",data[i].Name);
+            $("#ir11").attr("value",data[i].Rule);
+            $("#if11").attr("value",data[i].Fun);
+          }
+        }
+        
+      });
       
       
 
@@ -121,6 +141,10 @@ var sid
         var pagepre=$("#pagepre")[0].value;
         var pagerule=$("#pagerule")[0].value;
         var pagefun=$("#pagefun")[0].value;
+        var pagefour=$("#pagefour")[0].value;
+        var pagethree=$("#pagethree")[0].value==""?"-":$("#pagethree")[0].value;
+        var pagetwo=$("#pagetwo")[0].value==""?"-":$("#pagetwo")[0].value;
+        var pageone=$("#pageone")[0].value==""?"-":$("#pageone")[0].value;
         var ii=1;
         var rule = new Array();
         var fun=new Array();
@@ -137,7 +161,7 @@ var sid
         rule=rule.join("|");
         fun=fun.join("|");
 
-        $.get('/addconf',{"taskname":taskname,"cron":cron,"des":des,"dbtype":dbtype,"dbhost":dbhost,"dbport":dbport,"dbname":dbname,"dbuser":dbuser,"dbpasswd":dbpasswd,"reqtype":reqtype,"rooturl":rooturl,"cookie":cookie,"headerfile":headerfile,"useproxy":useproxy,"texttype":texttype,"postdata":postdata,"pagepre":pagepre,"pagerule":pagerule,"pagefun":pagefun,"theardnum":theardnum,"name":name,"rule":rule,"fun":fun},function(data){
+        $.get('/addconf',{"taskname":taskname,"cron":cron,"des":des,"dbtype":dbtype,"dbhost":dbhost,"dbport":dbport,"dbname":dbname,"dbuser":dbuser,"dbpasswd":dbpasswd,"reqtype":reqtype,"rooturl":rooturl,"cookie":cookie,"headerfile":headerfile,"useproxy":useproxy,"texttype":texttype,"postdata":postdata,"pagepre":pagepre,"pagerule":pagerule,"pagefun":pagefun,"pagefour":pagefour,"pagethree":pagethree,"pagetwo":pagetwo,"pageone":pageone,"theardnum":theardnum,"name":name,"rule":rule,"fun":fun},function(data){
           if(data.code==1){
             alert("操作成功！！");
           }else{
@@ -166,6 +190,10 @@ var sid
         var pagepre=$("#pagepre1")[0].value;
         var pagerule=$("#pagerule1")[0].value;
         var pagefun=$("#pagefun1")[0].value;
+        var pagefour=$("#pagefour1")[0].value;
+        var pagethree=$("#pagethree1")[0].value==""?"-":$("#pagethree1")[0].value;
+        var pagetwo=$("#pagetwo1")[0].value==""?"-":$("#pagetwo1")[0].value;
+        var pageone=$("#pageone1")[0].value==""?"-":$("#pageone1")[0].value;
         var ii=1;
         var rule = new Array();
         var fun=new Array();
