@@ -63,7 +63,7 @@
           <li class="action">任务详情</li>
           {{range .Conf}}
           
-            <li><a onclick="digJump1({{.ID}},{{.TaskName}},{{.Theardnum}},{{.Cron}},{{.Des}},{{.Dbtyble}},{{.Dbhost}},{{.Dbport}},{{.Dbname}},{{.Dbuser}},{{.Dbpasswd}},{{.ReqType}},{{.RootUrl}},{{.Cookie}},{{.HeaderFile}},{{.UseProxy}},{{.TextType}},{{.PostData}},{{.PagePre}},{{.PageRule}},{{.PageFun}},{{.PageFour}},{{.PageThree}},{{.PageTwo}},{{.PageOne}})">点击详情</a></li>
+            <li><a onclick="digJump1({{.ID}},{{.TaskName}},{{.Theardnum}},{{.Cron}},{{.Des}},{{.Dbtype}},{{.Dbhost}},{{.Dbport}},{{.Dbname}},{{.Dbuser}},{{.Dbpasswd}},{{.ReqType}},{{.RootUrl}},{{.Cookie}},{{.HeaderFile}},{{.UseProxy}},{{.TextType}},{{.PostData}},{{.PagePre}},{{.PageRule}},{{.PageFun}},{{.PageFour}},{{.PageThree}},{{.PageTwo}},{{.PageOne}})">点击详情</a></li>
           {{end}}
         </ul>
       </div>

@@ -6,7 +6,7 @@ type Conf struct {
 	Theardnum  int
 	Cron       string
 	Des        string
-	Dbtyble    string
+	Dbtype     string
 	Dbhost     string
 	Dbport     string
 	Dbname     string

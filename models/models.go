@@ -27,7 +27,7 @@ func GetConfs() (conf []Conf) {
 	defer rows.Close()
 	ct := Conf{}
 	for rows.Next() {
-		err := rows.Scan(&ct.ID, &ct.TaskName, &ct.Theardnum, &ct.Cron, &ct.Des, &ct.Dbtyble, &ct.Dbhost, &ct.Dbport, &ct.Dbname, &ct.Dbuser, &ct.Dbpasswd, &ct.ReqType, &ct.RootUrl, &ct.Cookie, &ct.HeaderFile, &ct.UseProxy, &ct.TextType, &ct.PostData, &ct.Status, &ct.PagePre, &ct.PageRule, &ct.PageFun, &ct.PageFour, &ct.PageThree, &ct.PageTwo, &ct.PageOne)
+		err := rows.Scan(&ct.ID, &ct.TaskName, &ct.Theardnum, &ct.Cron, &ct.Des, &ct.Dbtype, &ct.Dbhost, &ct.Dbport, &ct.Dbname, &ct.Dbuser, &ct.Dbpasswd, &ct.ReqType, &ct.RootUrl, &ct.Cookie, &ct.HeaderFile, &ct.UseProxy, &ct.TextType, &ct.PostData, &ct.Status, &ct.PagePre, &ct.PageRule, &ct.PageFun, &ct.PageFour, &ct.PageThree, &ct.PageTwo, &ct.PageOne)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -47,7 +47,7 @@ func GetConfsByStatus(s int) (conf []Conf) {
 	defer rows.Close()
 	ct := Conf{}
 	for rows.Next() {
-		err := rows.Scan(&ct.ID, &ct.TaskName, &ct.Theardnum, &ct.Cron, &ct.Des, &ct.Dbtyble, &ct.Dbhost, &ct.Dbport, &ct.Dbname, &ct.Dbuser, &ct.Dbpasswd, &ct.ReqType, &ct.RootUrl, &ct.Cookie, &ct.HeaderFile, &ct.UseProxy, &ct.TextType, &ct.PostData, &ct.Status, &ct.PagePre, &ct.PageRule, &ct.PageFun, &ct.PageFour, &ct.PageThree, &ct.PageTwo, &ct.PageOne)
+		err := rows.Scan(&ct.ID, &ct.TaskName, &ct.Theardnum, &ct.Cron, &ct.Des, &ct.Dbtype, &ct.Dbhost, &ct.Dbport, &ct.Dbname, &ct.Dbuser, &ct.Dbpasswd, &ct.ReqType, &ct.RootUrl, &ct.Cookie, &ct.HeaderFile, &ct.UseProxy, &ct.TextType, &ct.PostData, &ct.Status, &ct.PagePre, &ct.PageRule, &ct.PageFun, &ct.PageFour, &ct.PageThree, &ct.PageTwo, &ct.PageOne)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -67,7 +67,7 @@ func GetConfById(id int) (conf Conf) {
 	}
 	defer rows.Close()
 	for rows.Next() {
-		err := rows.Scan(&conf.ID, &conf.TaskName, &conf.Theardnum, &conf.Cron, &conf.Des, &conf.Dbtyble, &conf.Dbhost, &conf.Dbport, &conf.Dbname, &conf.Dbuser, &conf.Dbpasswd, &conf.ReqType, &conf.RootUrl, &conf.Cookie, &conf.HeaderFile, &conf.UseProxy, &conf.TextType, &conf.PostData, &conf.Status, &conf.PagePre, &conf.PageRule, &conf.PageFun, &conf.PageFour, &conf.PageThree, &conf.PageTwo, &conf.PageOne)
+		err := rows.Scan(&conf.ID, &conf.TaskName, &conf.Theardnum, &conf.Cron, &conf.Des, &conf.Dbtype, &conf.Dbhost, &conf.Dbport, &conf.Dbname, &conf.Dbuser, &conf.Dbpasswd, &conf.ReqType, &conf.RootUrl, &conf.Cookie, &conf.HeaderFile, &conf.UseProxy, &conf.TextType, &conf.PostData, &conf.Status, &conf.PagePre, &conf.PageRule, &conf.PageFun, &conf.PageFour, &conf.PageThree, &conf.PageTwo, &conf.PageOne)
 		if err != nil {
 			log.Fatal(err)
 		}
