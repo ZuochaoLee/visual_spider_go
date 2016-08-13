@@ -6,8 +6,6 @@
 ####本项目基于go_spider，结合了ip代理等全部反反爬模块，拥有可视化编辑维护爬取规则功能，系统自带golang原生的任务定时调度模块，可以自己管理定时执行爬虫任务，同时支持动态修改header，用户登录等功能。
 #安装
 ##依赖
-###go get github.com/ZuochaoLee/go-candyjs
-###go get github.com/ZuochaoLee/go_spider
 ###go get github.com/ZuochaoLee/cron
 ###go get github.com/astaxie/beego
 
