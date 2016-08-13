@@ -193,3 +193,23 @@ hr.in{
 	margin-left: 20%;
 	margin-right: 20%;
 }
+.t4{
+	margin-top: 30px;
+	margin-left: 15%;
+	margin-right: 15%;
+	margin-bottom: 80px;
+}
+h2{
+	font-size: 20px;
+	margin-top: 10px;
+}
+h3{
+	text-indent: 1em;
+	font-size: 18px;
+	margin-top: 10px;
+}
+.t4 p{
+	text-indent:  2em;
+	margin-top: 10px;
+	line-height: 24px;
+}
