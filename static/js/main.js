@@ -278,3 +278,14 @@ var sid
         location.reload() 
       });
     }
+    function test(){
+      var url=$("#testurl")[0].value;
+      var rule=$("#testrule")[0].value;
+      var fun=$("#testfun")[0].value;
+      var num=$("#testnum").find("option:selected").attr("value");
+      
+      $.get('/test',{"url":url,"rule":rule,"fun":fun,"num":num},function(data){
+        $("#result").html(data.result)
+      });
+
+    }

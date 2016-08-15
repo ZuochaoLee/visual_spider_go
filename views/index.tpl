@@ -18,6 +18,7 @@
       <li id="sy1" class="action" onclick="change(1)">首页</li>
       <li id="now1" onclick="change(2)">任务列表</li>
       <li id="new1" onclick="change(3)">添加任务</li>
+      <li id="conf1" onclick="change(4)">规则测试</li>
     </ul>
     <!--iframe src="http://www.baidu.com"></iframe-->
     <!--首页-->
@@ -176,8 +177,8 @@
         <p><label>项目函数：</label><input id="if1" type="text" name="if1" placeholder="text或者属性名称 比如：href"/></p>
         <p><label>获取数量：</label>
           <select id="iu1" name="iu1">
-              <option value="html">ONE</option>
-              <option value="json">ALL</option>
+              <option value="ONE">ONE</option>
+              <option value="ALL">ALL</option>
           </select>
         </p>
         <button id="1" class="add-rule d1"  onclick="addRule(1)">+</button>
@@ -186,7 +187,20 @@
       </div>
 
     </div>
-    
+    <div id="conf" class="sec" style="display:none;">
+    <div class="t2">规则测试</div>
+        <p><label>测试URL：</label><input id="testurl" type="text" name="ir1" placeholder=""/></p>
+        <p><label>测试规则：</label><input id="testrule" type="text" name="ir1" placeholder="选择器规则 比如 .in p"/></p>
+        <p><label>规则函数：</label><input id="testfun" type="text" name="if1" placeholder="text或者属性名称 比如：href"/></p>
+        <p><label>获取数量：</label>
+          <select id="testnum" name="iu1">
+              <option value="ONE">ONE</option>
+              <option value="ALL">ALL</option>
+          </select>
+        </p>
+        <button class="test"  onclick="test()">测试</button>
+        <div id="result"></div>
+    </div>
   </section>
   <footer>
     

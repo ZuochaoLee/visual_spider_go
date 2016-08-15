@@ -3,10 +3,12 @@ package models
 import (
 	"database/sql"
 	//"fmt"
+	"github.com/PuerkitoBio/goquery"
 	"github.com/astaxie/beego"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
 	"strconv"
+	"strings"
 )
 
 var db *sql.DB
@@ -182,6 +184,35 @@ func Start(id, name, cron string) (code int) {
 	} else {
 		code = 1
 		AddCron(id, name, cron)
+	}
+	return
+}
+func Test(url, rule, fun, num string) (result string) {
+	doc, err := goquery.NewDocument(url)
+	if err != nil {
+		println(err)
+	}
+
+	// Find the review items
+	if num == "ALL" {
+		var items []string
+		doc.Find(rule).Each(func(i int, s *goquery.Selection) {
+			// For each item found, get the band and title
+			item := ""
+			if fun == "text" {
+				item = s.Text()
+			} else {
+				item, _ = s.Attr(fun)
+			}
+			items = append(items, item)
+		})
+		result = strings.Join(items, "|")
+	} else {
+		if fun == "text" {
+			result = doc.Find(rule).Text()
+		} else {
+			result, _ = doc.Find(rule).Attr(fun)
+		}
 	}
 	return
 }

@@ -32,7 +32,6 @@ func (this *PageProcesserHtml) Process(p *page.Page) {
 	}
 
 	query := p.GetHtmlParser()
-
 	var urls []string
 	query.Find(this.page["rule"]).Each(func(i int, s *goquery.Selection) {
 		href := ""
@@ -53,10 +52,9 @@ func (this *PageProcesserHtml) Process(p *page.Page) {
 				if this.fun[k] == "text" {
 					item = s.Text()
 				} else {
-					item, _ = s.Attr(this.fun[v])
+					item, _ = s.Attr(this.fun[k])
 				}
-
-				items = append(items, this.page["pre"]+item)
+				items = append(items, item)
 			})
 			result[k] = strings.Join(items, "|")
 		} else {

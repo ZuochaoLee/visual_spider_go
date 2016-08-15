@@ -17,6 +17,19 @@ func (c *MainController) Get() {
 	c.TplName = "index.tpl"
 }
 
+type TestController struct {
+	beego.Controller
+}
+
+func (c *TestController) Get() {
+	url := c.Input().Get("url")
+	rule := c.Input().Get("rule")
+	fun := c.Input().Get("fun")
+	num := c.Input().Get("num")
+	c.Data["json"] = map[string]string{"result": models.Test(url, rule, fun, num)}
+	c.ServeJSON()
+}
+
 type GetRuleController struct {
 	beego.Controller
 }
