@@ -3,8 +3,8 @@ package page_processer
 import (
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
+	"strings"
 	"visual_spider_go/spider/core/common/page"
-	//"strings"
 )
 
 type PageProcesserHtml struct {
@@ -51,13 +51,14 @@ func (this *PageProcesserHtml) Process(p *page.Page) {
 		} else {
 			result[k], _ = query.Find(v).Attr(this.fun[k])
 		}
-		//result[k] = strings.Trim(result[k], " \t\n")
-		if result[k] == "" {
+		result[k] = strings.Trim(result[k], " \t\n")
+		if result[k] ==
+
+			"" {
 			p.SetSkip(true)
 		}
 		p.AddField(k, result[k])
 
-		//println(p.)
 	}
 	for k, v := range p.GetPageItems().GetAll() {
 		println(k, v)

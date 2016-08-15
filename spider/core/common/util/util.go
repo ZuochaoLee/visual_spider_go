@@ -4,6 +4,8 @@ package util
 import (
 	"encoding/xml"
 	"fmt"
+	redis "github.com/alphazero/Go-Redis"
+	"github.com/astaxie/beego"
 	"golang.org/x/net/html/charset"
 	"hash/crc32"
 	"io"
@@ -11,6 +13,21 @@ import (
 	"regexp"
 	"strings"
 )
+
+var client redis.Client
+
+func init() {
+	db, _ := beego.AppConfig.Int("ipdb")
+	port, _ := beego.AppConfig.Int("ipport")
+	spec := redis.DefaultSpec().Host(beego.AppConfig.String("iphost")).Port(port).Db(db).Password(beego.AppConfig.String("ippassword"))
+	c, err := redis.NewSynchClientWithSpec(spec)
+	//随机取IP
+	if err != nil {
+		println("数据库连接失败")
+	} else {
+		client = c
+	}
+}
 
 // JsonpToJson modify jsonp string to json string
 // Example: forbar({a:"1",b:2}) to {"a":"1","b":2}
@@ -103,4 +120,11 @@ func MakeHash(s string) string {
 	var IEEETable = crc32.MakeTable(IEEE)
 	hash := fmt.Sprintf("%x", crc32.Checksum([]byte(s), IEEETable))
 	return hash
+}
+
+//获取动态IP
+func GetIp() (proxy_addr string) {
+	proxy_addr, _ = client.Randomkey()
+	println(proxy_addr)
+	return
 }

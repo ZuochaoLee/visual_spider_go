@@ -8,6 +8,7 @@ import (
 	"visual_spider_go/spider/core/common/page_items"
 	"visual_spider_go/spider/core/common/request"
 	"visual_spider_go/spider/core/common/resource_manage"
+	"visual_spider_go/spider/core/common/util"
 	"visual_spider_go/spider/core/downloader"
 	"visual_spider_go/spider/core/page_processer"
 	"visual_spider_go/spider/core/pipeline"
@@ -160,7 +161,6 @@ func (this *Spider) Run() {
 	print("outout")
 	for {
 		req := this.pScheduler.Poll()
-		println(req)
 		// mc is not atomic
 		if this.mc.Has() == 0 && req == nil && this.exitWhenComplete {
 			mlog.StraceInst().Println("** executed callback **")
@@ -301,14 +301,15 @@ func (this *Spider) AddUrl(url string, respType string) *Spider {
 func (this *Spider) AddMyUrl(url, respType, urltag, resqType, postdata, proxy, heardefile, cookie string) *Spider {
 	req := request.NewRequest(url, respType, urltag, resqType, postdata, nil, nil, nil, nil)
 
-	if cookie == "" {
+	if cookie != "" {
 		print(cookie)
 	}
 	if heardefile != "" {
 		req.AddHeaderFile(heardefile)
 	}
 	if proxy != "" {
-		req.AddProxyHost(proxy)
+		ip := util.GetIp()
+		req.AddProxyHost(ip)
 	}
 	this.AddRequest(req)
 	return this

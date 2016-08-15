@@ -27,7 +27,7 @@ func InitTask() {
 	c.Stop()
 }
 func AddCron(id, name, cron string) {
-	c.AddFunc(cron, func() { println("in"); Run(id) }, name)
+	c.AddFunc(cron, func() { Run(id) }, name)
 }
 func RemoveCron(name string) {
 	c.RemoveJob(name)

@@ -10,7 +10,7 @@ func init() {
 	beego.Router("/getrule", &controllers.GetRuleController{})
 	beego.Router("/addconf", &controllers.AddConfController{})
 	// beego.Router("/updateTask", &controllers.UpdateTController{})
-	// beego.Router("/updateConf", &controllers.AddCController{})
+	beego.Router("/updateConf", &controllers.UpdateConfController{})
 	beego.Router("/stop", &controllers.StopController{})
 	beego.Router("/start", &controllers.StartController{})
 }

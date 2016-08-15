@@ -17,7 +17,6 @@ func Run(id string) {
 	//配置信息 可以来自数据库
 	iid, _ := strconv.Atoi(id)
 	confs := GetConfById(iid)
-	fmt.Println(confs)
 	//测试数据
 	// base := map[string]string{"taskname": "北京爱屋吉屋二手房", "threadnum": "30", "dbtype": "file", "dbhost": "", "dbport": "", "dbdb": "./data11.txt", "dbuser": "", "dbpasswd": ""}
 	// conf := map[string]string{"rooturl": "https://www.iwjw.com/sale/beijing/g1id124|ip5p|/", "texttype": "html", "resqType": "GET", "cookie": "", "headerfile": "", "postdata": "", "proxy": ""}
@@ -31,7 +30,6 @@ func Run(id string) {
 	page := map[string]string{"pre": confs.PagePre, "rule": confs.PageRule, "fun": confs.PageFun}
 	pagerule := map[string]string{"one": confs.PageOne, "two": confs.PageTwo, "three": confs.PageThree, "four": confs.PageFour}
 	rules := GetRulersById(confs.ID)
-	fmt.Println(rules)
 	rule := map[string]string{}
 	fun := map[string]string{}
 	for i := range rules {

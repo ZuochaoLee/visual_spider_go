@@ -67,7 +67,7 @@ var sid
           ops[k].selected=true;
       }
       $("#dbhost1").attr("value",dbhost);
-      $("#dbportq").attr("value",dbport);
+      $("#dbport1").attr("value",dbport);
       $("#dbname1").attr("value",dbname);
       $("#dbuser1").attr("value",dbuser);
       $("#dbpasswd1").attr("value",dbpasswd);
@@ -103,14 +103,16 @@ var sid
             var num=(parseInt(i)+1).toString()
             console.log($("#in1"+num))
             if($("#in1"+num).length!=1){
-              $(".add-rule.d2").before("<hr class=\"in\"/><p><label>项目名称：</label><input id=\"in1"+num+"\" type=\"text\" name=\"in1"+num+"\" value=\""+data[i].Name+"\"/><p><p><label>项目规则：</label><input id=\"ir1"+num+"\" type=\"text\" name=\"ir1"+num+"\"/ value=\""+data[i].Rule+"\"></p><p><label>项目函数：</label><input id=\"if1"+num+"\" type=\"text\" name=\"if1"+num+"\" value=\""+data[i].Fun+"\"/></p>");
+              $(".add-rule.d2").before("<hr class=\"in\"/><p><label>项目名称：</label><input id=\"in1"+num+"\" type=\"text\" name=\"in1"+num+"\" data=\""+data[i].ID+"\" value=\""+data[i].Name+"\"/><p><p><label>项目规则：</label><input id=\"ir1"+num+"\" type=\"text\" name=\"ir1"+num+"\"/ value=\""+data[i].Rule+"\"></p><p><label>项目函数：</label><input id=\"if1"+num+"\" type=\"text\" name=\"if1"+num+"\" value=\""+data[i].Fun+"\"/></p>");
               $(".add-rule.d2").attr("id",num);
             }else{
+              $("#in1"+num).attr("data",data[i].ID);
               $("#in1"+num).attr("value",data[i].Name);
               $("#ir1"+num).attr("value",data[i].Rule);
               $("#if1"+num).attr("value",data[i].Fun);
             }
           }else{
+            $("#in11").attr("data",data[i].ID);
             $("#in11").attr("value",data[i].Name);
             $("#ir11").attr("value",data[i].Rule);
             $("#if11").attr("value",data[i].Fun);
@@ -163,7 +165,9 @@ var sid
         name=name.join("|");
         rule=rule.join("|");
         fun=fun.join("|");
-
+        console.log(name);
+        console.log(rule);
+        console.log(fun);
         $.get('/addconf',{"taskname":taskname,"cron":cron,"des":des,"dbtype":dbtype,"dbhost":dbhost,"dbport":dbport,"dbname":dbname,"dbuser":dbuser,"dbpasswd":dbpasswd,"reqtype":reqtype,"rooturl":rooturl,"cookie":cookie,"headerfile":headerfile,"useproxy":useproxy,"texttype":texttype,"postdata":postdata,"pagepre":pagepre,"pagerule":pagerule,"pagefun":pagefun,"pagefour":pagefour,"pagethree":pagethree,"pagetwo":pagetwo,"pageone":pageone,"theardnum":theardnum,"name":name,"rule":rule,"fun":fun},function(data){
           if(data.code==1){
             alert("操作成功！！");
@@ -212,16 +216,14 @@ var sid
         name=name.join("|");
         rule=rule.join("|");
         fun=fun.join("|");
-        alert(taskname+cron+theardnum+des+dbtype);
-        // $.get('/updateTask',{"n":n,"o":o,"t":t,"s":s,"d":d},function(data){
-        //   $("#dig1").hide();
-        //   if(data.code==1){
-        //     alert("操作成功！！");
-        //   }else{
-        //     alert("操作失败！！");
-        //   }
-        //   location.reload() 
-        // });
+        $.get('/updateconf',{"id":sid,"taskname":taskname,"cron":cron,"des":des,"dbtype":dbtype,"dbhost":dbhost,"dbport":dbport,"dbname":dbname,"dbuser":dbuser,"dbpasswd":dbpasswd,"reqtype":reqtype,"rooturl":rooturl,"cookie":cookie,"headerfile":headerfile,"useproxy":useproxy,"texttype":texttype,"postdata":postdata,"pagepre":pagepre,"pagerule":pagerule,"pagefun":pagefun,"pagefour":pagefour,"pagethree":pagethree,"pagetwo":pagetwo,"pageone":pageone,"theardnum":theardnum,"name":name,"rule":rule,"fun":fun},function(data){
+          if(data.code==1){
+            alert("操作成功！！");
+          }else{
+            alert("操作失败！！");
+          }
+          location.reload() 
+        });
       }
     }
     function submitConf(){

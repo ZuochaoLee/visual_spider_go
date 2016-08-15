@@ -10,6 +10,7 @@ import (
 	"visual_spider_go/spider/core/common/mlog"
 	"visual_spider_go/spider/core/common/page_items"
 	"visual_spider_go/spider/core/common/request"
+	"visual_spider_go/spider/core/common/util"
 	//"fmt"
 )
 
@@ -137,7 +138,8 @@ func (this *Page) AddMyTargetRequest(url, respType, urltag, resqType, postdata, 
 		req.AddHeaderFile(heardefile)
 	}
 	if proxy != "" {
-		req.AddProxyHost(proxy)
+		ip := util.GetIp()
+		req.AddProxyHost(ip)
 	}
 	this.targetRequests = append(this.targetRequests, req)
 	return this
