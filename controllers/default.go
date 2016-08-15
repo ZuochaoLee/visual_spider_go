@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"fmt"
+	//"fmt"
 	"github.com/astaxie/beego"
 	"strconv"
 	"strings"
@@ -27,16 +27,6 @@ func (c *GetRuleController) Get() {
 	c.Data["json"] = models.GetRulersById(iid)
 	c.ServeJSON()
 }
-
-// type TestController struct {
-// 	beego.Controller
-// }
-
-// func (c *TestController) Get() {
-// 	template.Run()
-// 	//c.Data["json"] = map[string]int{"code": models.UpdateConf("php", "/lnmp/php/bin/php")}
-// 	c.ServeJSON()
-// }
 
 type AddConfController struct {
 	beego.Controller
@@ -70,16 +60,16 @@ func (c *AddConfController) Get() {
 	name := c.Input().Get("name")
 	rule := c.Input().Get("rule")
 	fun := c.Input().Get("fun")
+	num := c.Input().Get("num")
 	names := strings.Split(name, "|")
 	rules := strings.Split(rule, "|")
 	funs := strings.Split(fun, "|")
-	fmt.Println(names, rules, funs)
+	nums := strings.Split(num, "|")
 	if models.AddConf(taskname, cron, des, dbtype, dbhost, dbport, dbname, dbuser, dbpasswd, reqtype, rooturl, cookie, headerfile, useproxy, texttype, postdata, pagepre, pagerule, pagefun, pagefour, pagethree, pagetwo, pageone, theardnum) == 1 {
 		id := models.GetIdByName(taskname)
-		fmt.Println(id)
 		code := 0
 		for i, _ := range names {
-			code = models.AddRule(names[i], rules[i], funs[i], id)
+			code = models.AddRule(names[i], rules[i], funs[i], nums[i], id)
 		}
 		c.Data["json"] = map[string]int{"code": code}
 	} else {
@@ -122,22 +112,21 @@ func (c *UpdateConfController) Get() {
 	rule := c.Input().Get("rule")
 	fun := c.Input().Get("fun")
 	ids := c.Input().Get("ids")
+	num := c.Input().Get("num")
 	names := strings.Split(name, "|")
 	rules := strings.Split(rule, "|")
 	funs := strings.Split(fun, "|")
 	idss := strings.Split(ids, "|")
-	fmt.Println(rules, idss)
+	nums := strings.Split(num, "|")
 	if models.UpdateConf(id, taskname, cron, des, dbtype, dbhost, dbport, dbname, dbuser, dbpasswd, reqtype, rooturl, cookie, headerfile, useproxy, texttype, postdata, pagepre, pagerule, pagefun, pagefour, pagethree, pagetwo, pageone, theardnum) == 1 {
-		fmt.Println("123")
 		code := 0
 		for i, _ := range idss {
-			fmt.Println(idss[i], name[i])
 			if idss[i] == "" {
 				idi, _ := strconv.Atoi(id)
-				code = models.AddRule(names[i], rules[i], funs[i], idi)
+				code = models.AddRule(names[i], rules[i], funs[i], nums[i], idi)
 
 			} else {
-				code = models.UpdateRule(idss[i], names[i], rules[i], funs[i])
+				code = models.UpdateRule(idss[i], names[i], rules[i], funs[i], nums[i])
 			}
 		}
 		c.Data["json"] = map[string]int{"code": code}
@@ -146,32 +135,6 @@ func (c *UpdateConfController) Get() {
 	}
 	c.ServeJSON()
 }
-
-// type UpdateTController struct {
-// 	beego.Controller
-// }
-
-// func (c *UpdateTController) Get() {
-// 	n := c.Input().Get("n")
-// 	t := c.Input().Get("t")
-// 	d := c.Input().Get("d")
-// 	s := c.Input().Get("s")
-// 	o := c.Input().Get("o") //name, script, command, times, des string, status int
-// 	c.Data["json"] = map[string]int{"code": models.UpdateTask(n, s, o, t, d, 0)}
-// 	c.ServeJSON()
-// }
-
-// type AddCController struct {
-// 	beego.Controller
-// }
-
-// func (c *AddCController) Get() {
-// 	n := c.Input().Get("n")
-// 	o := c.Input().Get("o")
-// 	fmt.Println(n, o)
-// 	c.Data["json"] = map[string]int{"code": models.UpdateConf(n, o)}
-// 	c.ServeJSON()
-// }
 
 type StopController struct {
 	beego.Controller

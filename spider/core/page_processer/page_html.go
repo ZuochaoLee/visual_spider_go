@@ -12,11 +12,12 @@ type PageProcesserHtml struct {
 	page map[string]string
 	rule map[string]string
 	fun  map[string]string
+	num  map[string]string
 }
 
-func NewPageProcesserHtml(conf, page, rule, fun map[string]string) *PageProcesserHtml {
+func NewPageProcesserHtml(conf, page, rule, fun, num map[string]string) *PageProcesserHtml {
 
-	return &PageProcesserHtml{conf: conf, page: page, rule: rule, fun: fun}
+	return &PageProcesserHtml{conf: conf, page: page, rule: rule, fun: fun, num: num}
 }
 
 func (this *PageProcesserHtml) Process(p *page.Page) {
@@ -44,17 +45,30 @@ func (this *PageProcesserHtml) Process(p *page.Page) {
 		urls = append(urls, this.page["pre"]+href)
 	})
 	p.AddMyTargetRequests(urls, this.conf["texttype"], "", this.conf["resqType"], this.conf["postdata"], this.conf["proxy"], this.conf["heardefile"], this.conf["cookie"])
-
 	for k, v := range this.rule {
-		if this.fun[k] == "text" {
-			result[k] = query.Find(v).Text()
-		} else {
-			result[k], _ = query.Find(v).Attr(this.fun[k])
-		}
-		result[k] = strings.Trim(result[k], " \t\n")
-		if result[k] ==
+		if this.num[k] == "ALL" {
+			var items []string
+			query.Find(v).Each(func(i int, s *goquery.Selection) {
+				item := ""
+				if this.fun[k] == "text" {
+					item = s.Text()
+				} else {
+					item, _ = s.Attr(this.fun[v])
+				}
 
-			"" {
+				items = append(items, this.page["pre"]+item)
+			})
+			result[k] = strings.Join(items, "|")
+		} else {
+			if this.fun[k] == "text" {
+				result[k] = query.Find(v).Text()
+			} else {
+				result[k], _ = query.Find(v).Attr(this.fun[k])
+			}
+			result[k] = strings.Trim(result[k], " \t\n")
+		}
+
+		if result[k] == "" {
 			p.SetSkip(true)
 		}
 		p.AddField(k, result[k])

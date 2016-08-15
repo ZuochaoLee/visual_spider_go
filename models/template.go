@@ -32,9 +32,11 @@ func Run(id string) {
 	rules := GetRulersById(confs.ID)
 	rule := map[string]string{}
 	fun := map[string]string{}
+	num := map[string]string{}
 	for i := range rules {
 		rule[rules[i].Name] = rules[i].Rule
 		fun[rules[i].Name] = rules[i].Fun
+		num[rules[i].Name] = rules[i].Num
 	}
 
 	pagetype := map[string]string{"one": "list", "two": "list", "three": "list", "four": "num"}
@@ -42,7 +44,7 @@ func Run(id string) {
 
 	sp := spider.New(base["taskname"])
 	if conf["texttype"] == "html" {
-		sp.SetPageProcesser(page_processer.NewPageProcesserHtml(conf, page, rule, fun))
+		sp.SetPageProcesser(page_processer.NewPageProcesserHtml(conf, page, rule, fun, num))
 	}
 	t1 := time.Now()
 	//****翻页模版开始*****需要优化******************************//

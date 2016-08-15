@@ -34,4 +34,5 @@ type Ruler struct {
 	Name   string
 	Rule   string
 	Fun    string
+	Num    string
 }

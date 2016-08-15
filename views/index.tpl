@@ -174,6 +174,12 @@
         <p><label>项目名称：</label></label><input id="in1" type="text" name="in1" placeholder="抓取字段名称"/></p>
         <p><label>项目规则：</label><input id="ir1" type="text" name="ir1" placeholder="选择器规则 比如 .in p"/></p>
         <p><label>项目函数：</label><input id="if1" type="text" name="if1" placeholder="text或者属性名称 比如：href"/></p>
+        <p><label>获取数量：</label>
+          <select id="iu1" name="iu1">
+              <option value="html">ONE</option>
+              <option value="json">ALL</option>
+          </select>
+        </p>
         <button id="1" class="add-rule d1"  onclick="addRule(1)">+</button>
         <hr/>
         <div><input class="submit" type="button" name="submit" value="提交" onclick="submitTask(1)" /></div>
@@ -263,6 +269,12 @@
         <p><label>项目名称：</label></label><input id="in11" type="text" name="in1" placeholder="抓取字段名称"/></p>
         <p><label>项目规则：</label><input id="ir11" type="text" name="ir1" placeholder="选择器规则 比如 .in p"/></p>
         <p><label>项目函数：</label><input id="if11" type="text" name="if1" placeholder="text或者属性名称 比如：href"/></p>
+        <p><label>获取数量：</label>
+          <select id="iu11" name="iu11">
+              <option value="ONE">ONE</option>
+              <option value="ALL">ALL</option>
+          </select>
+        </p>
         <button id="1" class="add-rule d2"  onclick="addRule(2)">+</button>
         <hr/>
         <div><input class="submit" type="button" name="submit" value="提交" onclick="submitTask(2)" /></div>

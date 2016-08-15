@@ -47,12 +47,12 @@ var sid
       if(f==1){
         var num=$(".add-rule.d1").attr("id");
         num=(parseInt(num)+1).toString();
-        $(".add-rule.d1").before("<hr class=\"in\"/><p><label>项目名称：</label><input id=\"in"+num+"\" type=\"text\" name=\"in"+num+"\" placeholder=\"抓取字段名称\"/><p><p><label>项目规则：</label><input id=\"ir"+num+"\" type=\"text\" name=\"ir"+num+"\"/ placeholder=\"选择器规则 比如 .in p\"></p><p><label>项目函数：</label><input id=\"if"+num+"\" type=\"text\" name=\"if"+num+"\" placeholder=\"text或者属性名称 比如：href\"/></p>");
+        $(".add-rule.d1").before("<hr class=\"in\"/><p><label>项目名称：</label><input id=\"in"+num+"\" type=\"text\" name=\"in"+num+"\" placeholder=\"抓取字段名称\"/><p><p><label>项目规则：</label><input id=\"ir"+num+"\" type=\"text\" name=\"ir"+num+"\"/ placeholder=\"选择器规则 比如 .in p\"></p><p><label>项目函数：</label><input id=\"if"+num+"\" type=\"text\" name=\"if"+num+"\" placeholder=\"text或者属性名称 比如：href\"/></p><p><label>获取数量：</label><select id=\"iu"+num+"\" name=\"iu"+num+"\"><option value=\"ONE\">ONE</option><option value=\"ALL\">ALL</option></select></p>");
         $(".add-rule.d1").attr("id",num);
       }else{
         var num=$(".add-rule.d2").attr("id");
         num=(parseInt(num)+1).toString();
-        $(".add-rule.d2").before("<hr class=\"in\"/><p><label>项目名称：</label><input id=\"in1"+num+"\" type=\"text\" name=\"in1"+num+"\" placeholder=\"抓取字段名称\"/><p><p><label>项目规则：</label><input id=\"ir1"+num+"\" type=\"text\" name=\"ir1"+num+"\"/ placeholder=\"选择器规则 比如 .in p\"></p><p><label>项目函数：</label><input id=\"if1"+num+"\" type=\"text\" name=\"if1"+num+"\" placeholder=\"text或者属性名称 比如：href\"/></p>");
+        $(".add-rule.d2").before("<hr class=\"in\"/><p><label>项目名称：</label><input id=\"in1"+num+"\" type=\"text\" name=\"in1"+num+"\" placeholder=\"抓取字段名称\"/><p><p><label>项目规则：</label><input id=\"ir1"+num+"\" type=\"text\" name=\"ir1"+num+"\"/ placeholder=\"选择器规则 比如 .in p\"></p><p><label>项目函数：</label><input id=\"if1"+num+"\" type=\"text\" name=\"if1"+num+"\" placeholder=\"text或者属性名称 比如：href\"/></p><p><label>获取数量：</label><select id=\"iu1"+num+"\" name=\"iu1"+num+"\"><option value=\"ONE\">ONE</option><option value=\"ALL\">ALL</option></select></p>");
         $(".add-rule.d2").attr("id",num);
       }
       
@@ -104,21 +104,31 @@ var sid
         for( i in data){
           if(i>0){
             var num=(parseInt(i)+1).toString()
-            console.log($("#in1"+num))
             if($("#in1"+num).length!=1){
-              $(".add-rule.d2").before("<hr class=\"in\"/><p><label>项目名称：</label><input id=\"in1"+num+"\" type=\"text\" name=\"in1"+num+"\" data=\""+data[i].ID+"\" value=\""+data[i].Name+"\"/><p><p><label>项目规则：</label><input id=\"ir1"+num+"\" type=\"text\" name=\"ir1"+num+"\"/ value=\""+data[i].Rule+"\"></p><p><label>项目函数：</label><input id=\"if1"+num+"\" type=\"text\" name=\"if1"+num+"\" value=\""+data[i].Fun+"\"/></p>");
+              $(".add-rule.d2").before("<hr class=\"in\"/><p><label>项目名称：</label><input id=\"in1"+num+"\" type=\"text\" name=\"in1"+num+"\" data=\""+data[i].ID+"\" value=\""+data[i].Name+"\"/><p><p><label>项目规则：</label><input id=\"ir1"+num+"\" type=\"text\" name=\"ir1"+num+"\"/ value=\""+data[i].Rule+"\"></p><p><label>项目函数：</label><input id=\"if1"+num+"\" type=\"text\" name=\"if1"+num+"\" value=\""+data[i].Fun+"\"/></p><p><label>获取数量：</label><select id=\"iu1"+num+"\" name=\"iu1"+num+"\"><option value=\"ONE\">ONE</option><option value=\"ALL\">ALL</option></select></p>");
               $(".add-rule.d2").attr("id",num);
             }else{
               $("#in1"+num).attr("data",data[i].ID);
               $("#in1"+num).attr("value",data[i].Name);
               $("#ir1"+num).attr("value",data[i].Rule);
               $("#if1"+num).attr("value",data[i].Fun);
+              var ops=$("#iu1"+num)[0].options;
+              for (k in ops){
+                if(ops[k].label==data[i].Num)
+                  ops[k].selected=true;
+              }
             }
           }else{
             $("#in11").attr("data",data[i].ID);
             $("#in11").attr("value",data[i].Name);
             $("#ir11").attr("value",data[i].Rule);
             $("#if11").attr("value",data[i].Fun);
+            console.log(data)
+            var ops=$("#iu11")[0].options;
+            for (k in ops){
+              if(ops[k].label==data[i].Num)
+                ops[k].selected=true;
+            }
           }
         }
       });
@@ -157,21 +167,21 @@ var sid
         var rule = new Array();
         var fun=new Array();
         var name=new Array();
+        var nu=new Array();
         while($("#in"+ii.toString()).length==1){
           if($("#in"+ii.toString())[0].value!=""){
             rule.push($("#ir"+ii.toString())[0].value);
             fun.push($("#if"+ii.toString())[0].value);
             name.push($("#in"+ii.toString())[0].value);
+            nu.push($("#iu"+ii.toString())[0].value);
           }
           ii++;
         }
         name=name.join("|");
         rule=rule.join("|");
         fun=fun.join("|");
-        console.log(name);
-        console.log(rule);
-        console.log(fun);
-        $.get('/addconf',{"taskname":taskname,"cron":cron,"des":des,"dbtype":dbtype,"dbhost":dbhost,"dbport":dbport,"dbname":dbname,"dbuser":dbuser,"dbpasswd":dbpasswd,"reqtype":reqtype,"rooturl":rooturl,"cookie":cookie,"headerfile":headerfile,"useproxy":useproxy,"texttype":texttype,"postdata":postdata,"pagepre":pagepre,"pagerule":pagerule,"pagefun":pagefun,"pagefour":pagefour,"pagethree":pagethree,"pagetwo":pagetwo,"pageone":pageone,"theardnum":theardnum,"name":name,"rule":rule,"fun":fun},function(data){
+        nu=nu.join("|");
+        $.get('/addconf',{"taskname":taskname,"cron":cron,"des":des,"dbtype":dbtype,"dbhost":dbhost,"dbport":dbport,"dbname":dbname,"dbuser":dbuser,"dbpasswd":dbpasswd,"reqtype":reqtype,"rooturl":rooturl,"cookie":cookie,"headerfile":headerfile,"useproxy":useproxy,"texttype":texttype,"postdata":postdata,"pagepre":pagepre,"pagerule":pagerule,"pagefun":pagefun,"pagefour":pagefour,"pagethree":pagethree,"pagetwo":pagetwo,"pageone":pageone,"theardnum":theardnum,"name":name,"rule":rule,"fun":fun,"num":nu},function(data){
           if(data.code==1){
             alert("操作成功！！");
           }else{
@@ -209,12 +219,14 @@ var sid
         var fun=new Array();
         var name=new Array();
         var ids=new Array();
+        var nu=new Array();
         while($("#in1"+ii.toString()).length==1){
           if($("#in1"+ii.toString())[0].value!=""){
             rule.push($("#ir1"+ii.toString())[0].value);
             fun.push($("#if1"+ii.toString())[0].value);
             name.push($("#in1"+ii.toString())[0].value);
             ids.push($("#in1"+ii.toString()).attr('data'));
+            nu.push($("#iu1"+ii.toString())[0].value);
           }
           ii++;
         }
@@ -222,7 +234,8 @@ var sid
         rule=rule.join("|");
         fun=fun.join("|");
         ids=ids.join("|");
-        $.get('/updateconf',{"id":sid,"taskname":taskname,"cron":cron,"des":des,"dbtype":dbtype,"dbhost":dbhost,"dbport":dbport,"dbname":dbname,"dbuser":dbuser,"dbpasswd":dbpasswd,"reqtype":reqtype,"rooturl":rooturl,"cookie":cookie,"headerfile":headerfile,"useproxy":useproxy,"texttype":texttype,"postdata":postdata,"pagepre":pagepre,"pagerule":pagerule,"pagefun":pagefun,"pagefour":pagefour,"pagethree":pagethree,"pagetwo":pagetwo,"pageone":pageone,"theardnum":theardnum,"name":name,"rule":rule,"fun":fun,"ids":ids},function(data){
+        nu=nu.join("|");
+        $.get('/updateconf',{"id":sid,"taskname":taskname,"cron":cron,"des":des,"dbtype":dbtype,"dbhost":dbhost,"dbport":dbport,"dbname":dbname,"dbuser":dbuser,"dbpasswd":dbpasswd,"reqtype":reqtype,"rooturl":rooturl,"cookie":cookie,"headerfile":headerfile,"useproxy":useproxy,"texttype":texttype,"postdata":postdata,"pagepre":pagepre,"pagerule":pagerule,"pagefun":pagefun,"pagefour":pagefour,"pagethree":pagethree,"pagetwo":pagetwo,"pageone":pageone,"theardnum":theardnum,"name":name,"rule":rule,"fun":fun,"ids":ids,"num":nu},function(data){
           if(data.code==1){
             alert("操作成功！！");
           }else{
