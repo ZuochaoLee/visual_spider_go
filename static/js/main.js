@@ -43,12 +43,15 @@ var sid
       }
     }
     function addRule(f){
-      var num=$(".add-rule").attr("id");
-      num=(parseInt(num)+1).toString();
+      
       if(f==1){
+        var num=$(".add-rule.d1").attr("id");
+        num=(parseInt(num)+1).toString();
         $(".add-rule.d1").before("<hr class=\"in\"/><p><label>项目名称：</label><input id=\"in"+num+"\" type=\"text\" name=\"in"+num+"\" placeholder=\"抓取字段名称\"/><p><p><label>项目规则：</label><input id=\"ir"+num+"\" type=\"text\" name=\"ir"+num+"\"/ placeholder=\"选择器规则 比如 .in p\"></p><p><label>项目函数：</label><input id=\"if"+num+"\" type=\"text\" name=\"if"+num+"\" placeholder=\"text或者属性名称 比如：href\"/></p>");
         $(".add-rule.d1").attr("id",num);
       }else{
+        var num=$(".add-rule.d2").attr("id");
+        num=(parseInt(num)+1).toString();
         $(".add-rule.d2").before("<hr class=\"in\"/><p><label>项目名称：</label><input id=\"in1"+num+"\" type=\"text\" name=\"in1"+num+"\" placeholder=\"抓取字段名称\"/><p><p><label>项目规则：</label><input id=\"ir1"+num+"\" type=\"text\" name=\"ir1"+num+"\"/ placeholder=\"选择器规则 比如 .in p\"></p><p><label>项目函数：</label><input id=\"if1"+num+"\" type=\"text\" name=\"if1"+num+"\" placeholder=\"text或者属性名称 比如：href\"/></p>");
         $(".add-rule.d2").attr("id",num);
       }
@@ -142,7 +145,7 @@ var sid
         var rooturl=$("#rooturl")[0].value;
         var cookie=$("#cookie")[0].value;
         var headerfile=$("#headerfile")[0].value;
-        var useproxy=$("#useproxy").find("option:selected").text();
+        var useproxy=$("#useproxy").find("option:selected").attr("value");
         var pagepre=$("#pagepre")[0].value;
         var pagerule=$("#pagerule")[0].value;
         var pagefun=$("#pagefun")[0].value;
@@ -176,7 +179,7 @@ var sid
           }
           location.reload() 
         });
-      }else{
+      }else{//修改任务
         var taskname=$("#taskname1")[0].value;
         var cron=$("#cron1")[0].value;
         var theardnum=$("#theardnum1")[0].value;
@@ -193,7 +196,7 @@ var sid
         var rooturl=$("#rooturl1")[0].value;
         var cookie=$("#cookie1")[0].value;
         var headerfile=$("#headerfile1")[0].value;
-        var useproxy=$("#useproxy1").find("option:selected").text();
+        var useproxy=$("#useproxy1").find("option:selected").attr("value");
         var pagepre=$("#pagepre1")[0].value;
         var pagerule=$("#pagerule1")[0].value;
         var pagefun=$("#pagefun1")[0].value;
@@ -205,18 +208,21 @@ var sid
         var rule = new Array();
         var fun=new Array();
         var name=new Array();
+        var ids=new Array();
         while($("#in1"+ii.toString()).length==1){
           if($("#in1"+ii.toString())[0].value!=""){
             rule.push($("#ir1"+ii.toString())[0].value);
             fun.push($("#if1"+ii.toString())[0].value);
             name.push($("#in1"+ii.toString())[0].value);
+            ids.push($("#in1"+ii.toString()).attr('data'));
           }
           ii++;
         }
         name=name.join("|");
         rule=rule.join("|");
         fun=fun.join("|");
-        $.get('/updateconf',{"id":sid,"taskname":taskname,"cron":cron,"des":des,"dbtype":dbtype,"dbhost":dbhost,"dbport":dbport,"dbname":dbname,"dbuser":dbuser,"dbpasswd":dbpasswd,"reqtype":reqtype,"rooturl":rooturl,"cookie":cookie,"headerfile":headerfile,"useproxy":useproxy,"texttype":texttype,"postdata":postdata,"pagepre":pagepre,"pagerule":pagerule,"pagefun":pagefun,"pagefour":pagefour,"pagethree":pagethree,"pagetwo":pagetwo,"pageone":pageone,"theardnum":theardnum,"name":name,"rule":rule,"fun":fun},function(data){
+        ids=ids.join("|");
+        $.get('/updateconf',{"id":sid,"taskname":taskname,"cron":cron,"des":des,"dbtype":dbtype,"dbhost":dbhost,"dbport":dbport,"dbname":dbname,"dbuser":dbuser,"dbpasswd":dbpasswd,"reqtype":reqtype,"rooturl":rooturl,"cookie":cookie,"headerfile":headerfile,"useproxy":useproxy,"texttype":texttype,"postdata":postdata,"pagepre":pagepre,"pagerule":pagerule,"pagefun":pagefun,"pagefour":pagefour,"pagethree":pagethree,"pagetwo":pagetwo,"pageone":pageone,"theardnum":theardnum,"name":name,"rule":rule,"fun":fun,"ids":ids},function(data){
           if(data.code==1){
             alert("操作成功！！");
           }else{

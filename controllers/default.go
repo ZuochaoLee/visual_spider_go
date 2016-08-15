@@ -79,7 +79,7 @@ func (c *AddConfController) Get() {
 		fmt.Println(id)
 		code := 0
 		for i, _ := range names {
-			code = models.AddRules(names[i], rules[i], funs[i], id)
+			code = models.AddRule(names[i], rules[i], funs[i], id)
 		}
 		c.Data["json"] = map[string]int{"code": code}
 	} else {
@@ -121,15 +121,24 @@ func (c *UpdateConfController) Get() {
 	name := c.Input().Get("name")
 	rule := c.Input().Get("rule")
 	fun := c.Input().Get("fun")
-	rid := c.Input().Get("rid")
+	ids := c.Input().Get("ids")
 	names := strings.Split(name, "|")
 	rules := strings.Split(rule, "|")
 	funs := strings.Split(fun, "|")
-	rids := strings.Split(rid, "|")
+	idss := strings.Split(ids, "|")
+	fmt.Println(rules, idss)
 	if models.UpdateConf(id, taskname, cron, des, dbtype, dbhost, dbport, dbname, dbuser, dbpasswd, reqtype, rooturl, cookie, headerfile, useproxy, texttype, postdata, pagepre, pagerule, pagefun, pagefour, pagethree, pagetwo, pageone, theardnum) == 1 {
+		fmt.Println("123")
 		code := 0
-		for i, _ := range names {
-			code = models.UpdateRule(rids[i], names[i], rules[i], funs[i])
+		for i, _ := range idss {
+			fmt.Println(idss[i], name[i])
+			if idss[i] == "" {
+				idi, _ := strconv.Atoi(id)
+				code = models.AddRule(names[i], rules[i], funs[i], idi)
+
+			} else {
+				code = models.UpdateRule(idss[i], names[i], rules[i], funs[i])
+			}
 		}
 		c.Data["json"] = map[string]int{"code": code}
 	} else {

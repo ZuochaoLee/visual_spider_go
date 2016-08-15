@@ -239,7 +239,7 @@
         
         <p><label>是否使用代理：</label>
           <select id="useproxy1" name="useproxy">
-              <option value='0'>否</option>
+              <option value=''>否</option>
               <option value="1">是</option>
               
           </select>

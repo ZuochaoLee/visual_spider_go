@@ -129,7 +129,7 @@ func GetIdByName(taskname string) (id int) {
 	}
 	return
 }
-func AddRules(name, rule, fun string, taskid int) (code int) {
+func AddRule(name, rule, fun string, taskid int) (code int) {
 
 	var sql = "INSERT INTO rule(taskid,name, rule, fun) VALUES(" + strconv.Itoa(taskid) + ",'" + name + "', '" + rule + "', '" + fun + "');"
 	println(sql)
@@ -143,7 +143,8 @@ func AddRules(name, rule, fun string, taskid int) (code int) {
 	return
 }
 func UpdateConf(id, taskname, cron, des, dbtype, dbhost, dbport, dbname, dbuser, dbpasswd, reqtype, rooturl, cookie, headerfile, useproxy, texttype, postdata, pagepre, pagerule, pagefun, pagefour, pagethree, pagetwo, pageone, theardnum string) (code int) {
-	var sql = "update conf set taskname='" + taskname + "', cron='" + cron + "',des='" + des + "',dbtype='" + dbtype + "',dbhost=" + dbhost + ",dbport='" + dbport + ",dbname='" + dbname + "',dbuser='" + dbuser + "',dbpasswd='" + dbpasswd + "',reqtype='" + reqtype + "',rooturl='" + rooturl + "',cookie='" + cookie + "',headerfile='" + headerfile + "',useproxy='" + useproxy + "',texttype='" + texttype + "',postdata='" + postdata + "',pagepre='" + pagepre + "',pagerule='" + pagerule + "',pagefun='" + pagefun + "',pagefour='" + pagefour + "',pagethree='" + pagethree + "',pagetwo='" + pagetwo + "',pageone='" + pageone + "',theardnum='" + theardnum + "' where id=" + id + ";"
+	var sql = "update conf set taskname='" + taskname + "', cron='" + cron + "',des='" + des + "',dbtype='" + dbtype + "',dbhost='" + dbhost + "',dbport='" + dbport + "',dbname='" + dbname + "',dbuser='" + dbuser + "',dbpasswd='" + dbpasswd + "',reqtype='" + reqtype + "',rooturl='" + rooturl + "',cookie='" + cookie + "',headerfile='" + headerfile + "',useproxy='" + useproxy + "',texttype='" + texttype + "',postdata='" + postdata + "',pagepre='" + pagepre + "',pagerule='" + pagerule + "',pagefun='" + pagefun + "',pagefour='" + pagefour + "',pagethree='" + pagethree + "',pagetwo='" + pagetwo + "',pageone='" + pageone + "',theardnum='" + theardnum + "' where id=" + id + ";"
+	println(sql)
 	_, err := db.Exec(sql)
 	if err != nil {
 		code = 0
@@ -155,6 +156,7 @@ func UpdateConf(id, taskname, cron, des, dbtype, dbhost, dbport, dbname, dbuser,
 
 func UpdateRule(id, name, rule, fun string) (code int) {
 	var sql = "update rule set name='" + name + "',rule='" + rule + "' ,fun='" + fun + "' where id=" + id + ";"
+	println(sql)
 	_, err := db.Exec(sql)
 	if err != nil {
 		code = 0
